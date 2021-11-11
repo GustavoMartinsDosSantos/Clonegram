@@ -8,7 +8,10 @@
     </div>
     <div class="col-9 p-3 pl-5">
       <div class="d-flex inline justify-content-between align-items-baseline">
-        <h2 class="h3">{{$user->username ?? ""}}</h2>
+        <div class="d-flex">
+          <h2 class="h3">{{$user->username ?? ""}}</h2>
+          <follow-button></follow-button>
+        </div>
         @can('update', $user->profile)
         <a href="/p/create">Add New Post</a>
         @endcan
@@ -24,7 +27,7 @@
       <div>
         <div class="mt-4"><strong>{{$user->profile->title ?? ""}}</strong></div>
         <div>{{$user->profile->description ?? ""}}</div>
-        <a href="www.freecodecamp.org"><strong>{{$user->profile->url ?? ""}}</strong></a>
+        <a href="{{$user->profile->url ?? ''}}"><strong>{{$user->profile->url ?? ""}}</strong></a>
       </div>
     </div>
   </div>
