@@ -47,12 +47,16 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::created(function ($user)
-        {
+        static::created(function ($user) {
             $user->profile()->create([
                 'title' => $user->username
             ]);
         });
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(Profile::class);
     }
 
     public function profile()

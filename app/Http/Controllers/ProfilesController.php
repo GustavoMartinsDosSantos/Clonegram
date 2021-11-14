@@ -8,14 +8,17 @@ use Intervention\Image\Facades\Image;
 
 class ProfilesController extends Controller
 {
-    
+
     public function index(\App\Models\User $user)
     {
+        $follows = (auth()->user()) ? auth()->user()->following->contains($user->id) : false;
 
+        // dd(auth()->user()->following->contains($user->id));
         return view(
             'profiles.index',
             compact(
-                'user'
+                'user',
+                'follows'
             )
         );
     }
@@ -41,18 +44,17 @@ class ProfilesController extends Controller
             'image' => 'image',
         ]);
 
-        if(request('image'))
-        {
+        if (request('image')) {
             $imagePath = request('image')->store('storage', 'public');
-            
+
             $image = Image::make(public_path("storage/{$imagePath}"))->fit(1000, 1000);
             $image->save();
 
             $data['image'] = $imagePath;
         }
-        
+
         auth()->user()->profile->update($data);
 
-        return(redirect("/profile/{$user->id}"));
+        return (redirect("/profile/{$user->id}"));
     }
 }

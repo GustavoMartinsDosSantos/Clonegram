@@ -21,6 +21,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('/follow/{user}', [App\Http\Controllers\FollowsController::class, 'store']);
 
 Route::prefix('p')->group(function () {
     Route::post('', [App\Http\Controllers\PostsController::class, 'store']);

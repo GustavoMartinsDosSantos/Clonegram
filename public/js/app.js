@@ -2071,9 +2071,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["userId", "follows"],
+  data: function data() {
+    return {
+      followStatus: this.follows
+    };
+  },
   mounted: function mounted() {
     console.log("Component mounted.");
+  },
+  methods: {
+    followUser: function followUser() {
+      var _this = this;
+
+      axios.post("/follow/".concat(this.userId)).then(function (response) {
+        _this.followStatus = !_this.followStatus;
+      })["catch"](function (error) {
+        if (error.response.status === 401) window.location = '/login';
+      });
+    }
+  },
+  computed: {
+    buttonText: function buttonText() {
+      return this.followStatus ? "Unfollow" : "Follow";
+    }
   }
 });
 
@@ -37631,20 +37657,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("button", {
+      staticClass: "btn btn-primary ml-4",
+      domProps: { textContent: _vm._s(_vm.buttonText) },
+      on: { click: _vm.followUser }
+    })
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("button", { staticClass: "btn btn-primary ml-4" }, [
-        _vm._v("FolAolow")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
