@@ -13,7 +13,7 @@ class Profile extends Model
 
     public function profileImage()
     {
-        return '/storage/' . ($this->image) ? $this->image : asset('/images/defaultProfileImage.png');
+        return '/storage/' . (($this->image) ? $this->image : 'general/defaultProfileImage.png');
     }
 
     public function followers(){

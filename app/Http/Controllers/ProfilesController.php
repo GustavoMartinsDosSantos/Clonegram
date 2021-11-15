@@ -13,7 +13,6 @@ class ProfilesController extends Controller
     {
         $follows = (auth()->user()) ? auth()->user()->following->contains($user->id) : false;
 
-        // dd(auth()->user()->following->contains($user->id));
         return view(
             'profiles.index',
             compact(
